@@ -1,6 +1,6 @@
-./SW_2018/store.kdb
-./SW_2018/magic.kdb
-
+./part_2/SW_2018/store.kdb
+./part_2/SW_2018/magic.kdb
+./part_2/SW_2018/input.bin
 # Prerequisites
 *.d
 
