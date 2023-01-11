@@ -118,7 +118,7 @@ int main()
     h->head = (int32_t *)malloc(sizeof(int32_t));
     fread(h->head,sizeof(int32_t),1,file_ptr);
     fseek(file_ptr,*h->head,0);
-    for(int i=0;i<8;i++){
+    for(int i=0;i<1;i++){
     char *c = malloc(sizeof(char)*16);
     fread(c,sizeof(char),16,file_ptr);
     int32_t k;
