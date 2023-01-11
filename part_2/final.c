@@ -55,7 +55,7 @@ void byte_swap(void* data, size_t size) {
 
 unsigned char *seek_data(int32_t data_pointer,int16_t size){
     FILE* fptr = fopen("./SW_2018/store.kdb", "rb");
-    FILE* decode = fopen("./SW_2018/document.txt", "w");
+    FILE* decode = fopen("document.txt", "w");
     fseek(fptr,data_pointer,SEEK_SET);
     unsigned char *c = malloc(sizeof(char));
     for (int i = 0; i < size; i++){
@@ -102,11 +102,7 @@ void *Crypt(unsigned char* data,int dataLength,unsigned int initialValue){
         
         
     }
-    for(int i=0; i<(sizeof(final)/4);i++) printf("%c",final[i]);
     return final;
-}
-void print_string(unsigned char *k){
-    for(int i=0; i<(sizeof(k)/4);i++) printf("%c",k[i]);
 }
 
 int main()
@@ -128,9 +124,23 @@ int main()
     int32_t k;
     fread(&k,sizeof(int32_t),1,file_ptr);
     unsigned char *b = seek_block_list(k,c);
-    print_string(b);
-    //printf("%d %s \n",i,b);
     int l=sizeof(b);
     Crypt(b,l,0x4F574154);
     }
+   FILE *fptr=fopen("document.txt","r");
+    unsigned char *someValue = malloc(sizeof(fptr));
+    char a;
+    int c=0;
+    while(a != EOF){
+        a=fgetc(fptr);
+        someValue=realloc(someValue,c+1);
+        if(a != 0){
+        someValue[c] = a;
+        c++;
+        //printf("%.08x ",someValue[c]);
+        }
+    }
+    unsigned char *final = Crypt(someValue,c,0x4F574154);
+    for(int i=0; i<strlen((char*)final); i++) printf("%c",final[i]);
+
 }
