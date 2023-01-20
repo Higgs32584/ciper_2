@@ -4,7 +4,7 @@
 
 void Crypt(unsigned char* data,int dataLength,unsigned int initialValue){
     long F = 0x87654321;
-    unsigned char *final=malloc(sizeof(*data));
+    unsigned char *final = malloc(sizeof(*data));
     for(int k=0;k<dataLength;k++){
         for(int i=0;i<8;i++){
             if(initialValue % 2 == 0){
@@ -26,17 +26,17 @@ void Crypt(unsigned char* data,int dataLength,unsigned int initialValue){
                    printf("%c",final[z]);
         }
 }
-//Chat  GPT
 void charToUnsignedChar(char* charArray, unsigned char* unsignedCharArray, int size) {
 for (int i = 0; i < size; i++) {
         unsignedCharArray[i] = (unsigned char) charArray[i];
     }
 
 }
-int main()
+int main(int argc,char** argv)
 {  
+    printf("%s\n",argv[1]);
     FILE* file_ptr;
-    file_ptr= fopen("./store.kdb", "rb");
+    file_ptr= fopen(argv[1], "rb");
     char *magic = malloc(sizeof(char)*6);
     long pointer;
     fread(magic,sizeof(char),6,file_ptr);
@@ -67,14 +67,12 @@ int main()
 		bytesRead = fread(buffer, 1, data_size,file_ptr);
 		unsigned char *actual_buffer = (unsigned char *) malloc(bytesRead);
 		charToUnsignedChar(buffer,actual_buffer,data_size);
-		Crypt(actual_buffer,bytesRead,0x4F574154);
-		
-		
-   }		
+		Crypt(actual_buffer,bytesRead,0x4F574154);		
+   		
+    }		
     fclose(file_ptr);
     return 0;
 }
-
 
 
 
