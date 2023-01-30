@@ -42,16 +42,18 @@ int main(int argc,char** argv)
     fseek(file_ptr,pointer,SEEK_SET);
     
     int32_t* data=(int32_t*)malloc(sizeof(int32_t)*127);
-    //char** names = (char**)malloc(sizeof(char*)*127);
-    int32_t k;
+    char **names = (char**)malloc(sizeof(char*)*127);
+    int32_t k=-1;
     int i=0;
     while(k != 0){
 	char *c = (char *) malloc(sizeof(char)*16);
 	fread(c,sizeof(char),16,file_ptr);
         fread(&k,sizeof(int32_t),1,file_ptr);
+	if(k != 0){
 	printf("%s \n",c);
-	data[i] = k;
-	//names[i] = c;
+	}
+	//names[i]=(char*)malloc(sizeof(char*)*16);
+	//names[i]=c;
 	i++;
     }
     data=realloc(data,i*sizeof(int32_t));
@@ -60,7 +62,6 @@ int main(int argc,char** argv)
     for(int j=0;j<i;j++){
 	       	
 	        fseek(file_ptr,data[j],SEEK_SET);
-		//printf("Section: %s",names[j]);
 		int16_t data_size;
     		int32_t data_pointer;
 		fread(&data_size,sizeof(int16_t),1,file_ptr);
