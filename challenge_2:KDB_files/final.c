@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-
+#include <inttypes.h>
 void Crypt(unsigned char* data,int dataLength,unsigned int initialValue){
     long F = 0x87654321;
     unsigned char *final = malloc(sizeof(*data));
@@ -19,25 +19,17 @@ void Crypt(unsigned char* data,int dataLength,unsigned int initialValue){
         int saneValue = (initialValue ^ num);
         saneValue = (0X000000FF & saneValue);
         final[k]=saneValue;
-
-
     }
     for(int z=0;z<dataLength;z++) {
                    printf("%c",final[z]);
         }
+    printf("\n");
 }
 void charToUnsignedChar(char* charArray, unsigned char* unsignedCharArray, int size) {
 	for (int i = 0; i < size; i++) {
         	unsignedCharArray[i] = (unsigned char) charArray[i];
     	}
-
-	}
-char *test_func(){
-	char *c =(char *)malloc(sizeof(char)*16);
-	return c;
 }
-
-
 int main(int argc,char** argv)
 {  
     FILE* file_ptr;
@@ -50,25 +42,27 @@ int main(int argc,char** argv)
     fseek(file_ptr,pointer,SEEK_SET);
     
     int32_t* data=(int32_t*)malloc(sizeof(int32_t)*127);
-    int32_t k;
+    char** names = (char**)malloc(sizeof(char*)*127);
+    int32_t k=0;
     int i=0;
     while(k != 0){
-	char *c = test_func();
+	char *c = (char *)malloc(sizeof(char)*16);
 	fread(c,sizeof(char),16,file_ptr);
         fread(&k,sizeof(int32_t),1,file_ptr);
+	printf("%s \n",c);
 	data[i] = k;
+	names[i] = c;
 	i++;
-	free(c);
     }
     data=realloc(data,i*sizeof(int32_t));
+    names=realloc(names,i*sizeof(char*));
     i=i-1;
     for(int j=0;j<i;j++){
 	       	
 	        fseek(file_ptr,data[j],SEEK_SET);
-		
+		printf("Section: %s",names[j]);
 		int16_t data_size;
     		int32_t data_pointer;
-    		//printf("%d %d",data_size,data_pointer);
 		fread(&data_size,sizeof(int16_t),1,file_ptr);
     		fread(&data_pointer,sizeof(int32_t),1,file_ptr);
 		fseek(file_ptr,data_pointer,0);
