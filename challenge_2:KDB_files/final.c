@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <string.h>
 
 void Crypt(unsigned char* data,int dataLength,unsigned int initialValue){
     long F = 0x87654321;
@@ -40,24 +41,23 @@ int main(int argc,char** argv)
     fread(magic,sizeof(char),6,file_ptr);
     fread(&pointer,sizeof(int32_t),1,file_ptr);
     fseek(file_ptr,pointer,SEEK_SET);
-    
+
     int32_t* data=(int32_t*)malloc(sizeof(int32_t)*127);
-    char **names = (char**)malloc(sizeof(char*)*127);
     int32_t k=-1;
+    
     int i=0;
     while(k != 0){
-	char *c = (char *) malloc(sizeof(char)*16);
+	char *c=(char*)malloc(sizeof(char)*16);
 	fread(c,sizeof(char),16,file_ptr);
         fread(&k,sizeof(int32_t),1,file_ptr);
 	if(k != 0){
-	printf("%s \n",c);
+	printf("%s\n",c);
+	data[i]=k;
 	}
-	//names[i]=(char*)malloc(sizeof(char*)*16);
-	//names[i]=c;
+	
 	i++;
     }
     data=realloc(data,i*sizeof(int32_t));
-    //names=realloc(names,i*sizeof(char*));
     i=i-1;
     for(int j=0;j<i;j++){
 	       	

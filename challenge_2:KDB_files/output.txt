@@ -1,0 +1,16 @@
+1. Physical
+2. Data Link
+3. Network
+4. Transport
+5. Session
+6. Presentation
+7. Application
+8. User
+Concerned with the transmission and reception of the unstructured raw bit stream over the physical medium.
+Provides error-free transfer of data frames from one node to another over the Physical layer.
+Controls the operations of the subnet deciding which physical path the data takes.
+Ensures that messages are delivered error-free, in sequence, and with no losses or duplications.
+Allows session establishment between processes running on different stations.
+Formats the data to be presented to the Application layer. It can be viewed as the "Translator" for the network.
+Serves as the window for users and application processes to access the network services.
+Determines what the computer should compute. This layer is the most error prone.
