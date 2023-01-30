@@ -32,26 +32,6 @@ void charToUnsignedChar(char* charArray, unsigned char* unsignedCharArray, int s
     	}
 
 	}
-
-struct LinkedList{
-	int32_t a;
-	char *name;
-	struct LinkedList *next;
-};
-typedef struct LinkedList *node;
-
-
-
-
-node createNode(){
-	node n;
-	n = (node) malloc(sizeof(struct LinkedList));
-	n->name = (char *) malloc(sizeof(char)*16);
-	n->next = NULL;
-	return n;
-
-}
-
 char *test_func(){
 	char *c =(char *)malloc(sizeof(char)*16);
 	return c;
@@ -60,12 +40,10 @@ char *test_func(){
 
 int main(int argc,char** argv)
 {  
-    printf("%s\n",argv[1]);
     FILE* file_ptr;
     file_ptr= fopen(argv[1], "rb");
     char *magic = malloc(sizeof(char)*6);
     long pointer;
-    //struct ll b;
 
     fread(magic,sizeof(char),6,file_ptr);
     fread(&pointer,sizeof(int32_t),1,file_ptr);
@@ -74,12 +52,10 @@ int main(int argc,char** argv)
     int32_t* data=(int32_t*)malloc(sizeof(int32_t)*127);
     int32_t k;
     int i=0;
-    //int arraySize=sizeof(int32_t);
     while(k != 0){
 	char *c = test_func();
 	fread(c,sizeof(char),16,file_ptr);
         fread(&k,sizeof(int32_t),1,file_ptr);
-	printf("%d \n",i);
 	data[i] = k;
 	i++;
 	free(c);
