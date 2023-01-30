@@ -1,8 +1,0 @@
-1-->Concerned with the transmission and recepto
-2-->Provides error-free transfer of data frame
-3-->Controls the operations of the subnet decid
-4-->Ensures that messages are delivered error-free, in sequence, and with no losses or dup
-5-->Allows session establishment between proce
-6-->Formats the data to be presented to the Application layer. It can be viewed as the "Translator" 
-7-->Serves as the window for users and applicat
-8-->Determines what the computer should compute. This layer is the mo
