@@ -24,13 +24,14 @@ void Crypt(unsigned char* data,int dataLength,unsigned int initialValue){
     for(int z=0;z<dataLength;z++) {
                    printf("%c",decryptedData[z]);
         }
-    printf("\n");
+    //printf("\n");
 }
 void charToUnsignedChar(char* charArray, unsigned char* outputUnsignedCharArray, int size) {
 	for (int i = 0; i < size; i++) {
         	outputUnsignedCharArray[i] = (unsigned char) charArray[i];
     	}
 }
+
 int main(int argc,char** argv)
 {  
     FILE* file_ptr;
@@ -51,7 +52,10 @@ int main(int argc,char** argv)
 	fread(c,sizeof(char),16,file_ptr);
         fread(&block_list_pointer,sizeof(int32_t),1,file_ptr);
 	if(block_list_pointer!= 0){
+	//added this so that the titles are not printed when compiled on ASN#3
+	if(argc == 2){
 	printf("%s\n",c);
+	}
 	data[i]=block_list_pointer;
 	}
 	i++;
