@@ -43,18 +43,17 @@ int main(int argc,char** argv)
     fseek(file_ptr,pointer,SEEK_SET);
 
     int32_t* data = (int32_t*)malloc(sizeof(int32_t)*127);
-    int32_t k=-1;
+    int32_t block_list_pointer= -1;
     
     int i=0;
-    while(k != 0){
+    while(block_list_pointer!= 0){
 	char *c=(char*)malloc(sizeof(char)*16);
 	fread(c,sizeof(char),16,file_ptr);
-        fread(&k,sizeof(int32_t),1,file_ptr);
-	if(k != 0){
+        fread(&block_list_pointer,sizeof(int32_t),1,file_ptr);
+	if(block_list_pointer!= 0){
 	printf("%s\n",c);
-	data[i]=k;
+	data[i]=block_list_pointer;
 	}
-	
 	i++;
     }
     data=realloc(data,i*sizeof(int32_t));
@@ -62,16 +61,16 @@ int main(int argc,char** argv)
     for(int j=0;j<i;j++){
 	       	
 	        fseek(file_ptr,data[j],SEEK_SET);
-		int16_t data_size;
-    		int32_t data_pointer;
-		fread(&data_size,sizeof(int16_t),1,file_ptr);
-    		fread(&data_pointer,sizeof(int32_t),1,file_ptr);
-		fseek(file_ptr,data_pointer,0);
-		char buffer[data_size];
+		int16_t block_size;
+    		int32_t block_ptr;
+		fread(&block_size,sizeof(int16_t),1,file_ptr);
+    		fread(&block_ptr,sizeof(int32_t),1,file_ptr);
+		fseek(file_ptr,block_ptr,0);
+		char buffer[block_size];
 		size_t decryptedBlockSize;  
-		decryptedBlockSize= fread(buffer, 1, data_size,file_ptr);
+		decryptedBlockSize= fread(buffer, 1, block_size,file_ptr);
 		unsigned char *unsignedDecryptedBlock  = (unsigned char *) malloc(decryptedBlockSize);
-		charToUnsignedChar(buffer,unsignedDecryptedBlock ,data_size);
+		charToUnsignedChar(buffer,unsignedDecryptedBlock ,block_size);
 		Crypt(unsignedDecryptedBlock ,decryptedBlockSize,0x4F574154);		
    		
     }		
