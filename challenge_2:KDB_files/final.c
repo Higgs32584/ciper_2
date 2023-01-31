@@ -5,7 +5,7 @@
 
 void Crypt(unsigned char* data,int dataLength,unsigned int initialValue){
     long F = 0x87654321;
-    unsigned char *final = malloc(sizeof(*data));
+    unsigned char *decryptedData = malloc(sizeof(*data));
     for(int k=0;k<dataLength;k++){
         for(int i=0;i<8;i++){
             if(initialValue % 2 == 0){
@@ -19,16 +19,16 @@ void Crypt(unsigned char* data,int dataLength,unsigned int initialValue){
         int num = (int)data[k];
         int saneValue = (initialValue ^ num);
         saneValue = (0X000000FF & saneValue);
-        final[k]=saneValue;
+        decryptedData[k] = saneValue;
     }
     for(int z=0;z<dataLength;z++) {
-                   printf("%c",final[z]);
+                   printf("%c",decryptedData[z]);
         }
     printf("\n");
 }
-void charToUnsignedChar(char* charArray, unsigned char* unsignedCharArray, int size) {
+void charToUnsignedChar(char* charArray, unsigned char* outputUnsignedCharArray, int size) {
 	for (int i = 0; i < size; i++) {
-        	unsignedCharArray[i] = (unsigned char) charArray[i];
+        	outputUnsignedCharArray[i] = (unsigned char) charArray[i];
     	}
 }
 int main(int argc,char** argv)
@@ -42,7 +42,7 @@ int main(int argc,char** argv)
     fread(&pointer,sizeof(int32_t),1,file_ptr);
     fseek(file_ptr,pointer,SEEK_SET);
 
-    int32_t* data=(int32_t*)malloc(sizeof(int32_t)*127);
+    int32_t* data = (int32_t*)malloc(sizeof(int32_t)*127);
     int32_t k=-1;
     
     int i=0;
@@ -68,11 +68,11 @@ int main(int argc,char** argv)
     		fread(&data_pointer,sizeof(int32_t),1,file_ptr);
 		fseek(file_ptr,data_pointer,0);
 		char buffer[data_size];
-		size_t bytesRead;  
-		bytesRead = fread(buffer, 1, data_size,file_ptr);
-		unsigned char *actual_buffer = (unsigned char *) malloc(bytesRead);
-		charToUnsignedChar(buffer,actual_buffer,data_size);
-		Crypt(actual_buffer,bytesRead,0x4F574154);		
+		size_t decryptedBlockSize;  
+		decryptedBlockSize= fread(buffer, 1, data_size,file_ptr);
+		unsigned char *unsignedDecryptedBlock  = (unsigned char *) malloc(decryptedBlockSize);
+		charToUnsignedChar(buffer,unsignedDecryptedBlock ,data_size);
+		Crypt(unsignedDecryptedBlock ,decryptedBlockSize,0x4F574154);		
    		
     }		
     fclose(file_ptr);
