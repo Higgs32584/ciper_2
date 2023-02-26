@@ -1,5 +1,6 @@
 .store.kdb
 .magic.kdb
+.*.kdb
 .input.bin
 ./part_2/document.txt
 ./part_2/final.exe
